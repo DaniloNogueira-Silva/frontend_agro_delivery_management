@@ -1,0 +1,58 @@
+# Criação do usuário
+POST https://agro-delivery-management.vercel.app/user
+content-type: application/json
+
+{
+    "name": "admin",
+    "email": "admin@email.com",
+    "password": "123456",
+    "role": "ADMIN"
+}
+
+###
+
+# Requisição de login
+# @name login
+POST https://agro-delivery-management.vercel.app/auth/login
+content-type: application/json
+
+{
+    "email": "admin@email.com",
+    "password": "123456"
+}
+
+###
+
+@token= {{login.response.body.$.access_token}}
+
+###
+
+GET https://agro-delivery-management.vercel.app/user
+Authorization: Bearer {{token}}
+
+###
+
+PATCH https://agro-delivery-management.vercel.app/user/68110e65550adfb07398a6f4
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "admin_updated"
+}
+
+###
+
+GET https://agro-delivery-management.vercel.app/user/68110e65550adfb07398a6f4
+Authorization: Bearer {{token}}
+
+###
+
+GET https://agro-delivery-management.vercel.app/user/profile
+Authorization: Bearer {{token}}
+
+###
+
+DELETE  https://agro-delivery-management.vercel.app/user/68110e65550adfb07398a6f4
+Authorization: Bearer {{token}}
+
+###

@@ -1,0 +1,57 @@
+# Requisição de login
+# @name login
+POST https://agro-delivery-management.vercel.app/auth/login
+content-type: application/json
+
+{
+    "email": "admin@email.com",
+    "password": "123456"
+}
+
+
+###
+
+@token= {{login.response.body.$.access_token}}
+
+###
+
+POST https://agro-delivery-management.vercel.app/truck
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "licensePlate": "ABCD123",
+    "type": "FRIGORÍFICO",
+    "capacity": 1000,
+    "lastStatus": "Disponível",
+    "nextReview": null,
+    "maintenanceCost": null
+}
+
+###
+
+GET https://agro-delivery-management.vercel.app/truck
+Authorization: Bearer {{token}}
+
+###
+
+PATCH https://agro-delivery-management.vercel.app/truck/6813e188cc463b5bbc6195cb
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "nextReview": "2025-05-01",
+    "maintenanceCost": 250
+}
+
+###
+
+GET https://agro-delivery-management.vercel.app/truck/6813e188cc463b5bbc6195cb
+Authorization: Bearer {{token}}
+
+###
+
+DELETE  https://agro-delivery-management.vercel.app/truck/6813ee3546aad485808e7b1b
+Authorization: Bearer {{token}}
+
+###

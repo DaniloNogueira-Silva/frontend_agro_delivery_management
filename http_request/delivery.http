@@ -1,0 +1,60 @@
+# Requisição de login
+# @name login
+POST https://agro-delivery-management.vercel.app/auth/login
+content-type: application/json
+
+{
+    "email": "admin@email.com",
+    "password": "123456"
+}
+
+
+###
+
+@token= {{login.response.body.$.access_token}}
+
+###
+
+POST https://agro-delivery-management.vercel.app/delivery
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+        "truck": "68191c89d4e0db39f5c52f5b",
+        "driver": "68191a28d4e0db39f5c52f58",
+        "origin": "14403350",
+        "destination": "14403308",
+        "status": "Pendente",
+        "deliveryDate": "2025-05-08",
+        "deliveryDetails": 0,
+        "distance": 100,
+        "fuelCost": 5
+}
+
+###
+
+GET https://agro-delivery-management.vercel.app/delivery
+Authorization: Bearer {{token}}
+
+###
+
+PATCH https://agro-delivery-management.vercel.app/delivery/68191a28d4e0db39f5c52f58
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "nextReview": "2025-05-01",
+    "maintenanceCost": 250
+}
+
+###
+
+GET https://agro-delivery-management.vercel.app/delivery/68191a28d4e0db39f5c52f58
+Authorization: Bearer {{token}}
+
+###
+
+DELETE  https://agro-delivery-management.vercel.app/delivery/68191a28d4e0db39f5c52f58
+Authorization: Bearer {{token}}
+
+###

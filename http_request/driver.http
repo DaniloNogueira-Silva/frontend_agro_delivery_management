@@ -1,0 +1,60 @@
+# Requisição de login
+# @name login
+POST https://agro-delivery-management.vercel.app/auth/login
+content-type: application/json
+
+{
+    "email": "admin@email.com",
+    "password": "123456"
+}
+
+
+###
+
+@token= {{login.response.body.$.access_token}}
+
+###
+
+POST https://agro-delivery-management.vercel.app/driver
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+        "name": "John Doe",
+        "email": "XW6v8@example.com",
+        "phone": "1234567890",
+        "licenseNumber": "ABC123",
+        "hireDate": "2025-05-05",
+        "status": "Ativo",
+        "assignedTruck": "1",
+        "totalDeliveries": 0,
+        "licenseExpirationDate": "2030-05-05"
+}
+
+###
+
+GET https://agro-delivery-management.vercel.app/driver
+Authorization: Bearer {{token}}
+
+###
+
+PATCH https://agro-delivery-management.vercel.app/driver/68191a28d4e0db39f5c52f58
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "nextReview": "2025-05-01",
+    "maintenanceCost": 250
+}
+
+###
+
+GET https://agro-delivery-management.vercel.app/driver/68191a28d4e0db39f5c52f58
+Authorization: Bearer {{token}}
+
+###
+
+DELETE  https://agro-delivery-management.vercel.app/driver/68191a28d4e0db39f5c52f58
+Authorization: Bearer {{token}}
+
+###
