@@ -30,6 +30,27 @@ export class HttpRequest {
     }
   }
 
+  async createUser(
+    email: string,
+    password: string,
+    name: string,
+    role: string
+  ): Promise<void> {
+    try {
+      return await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`,
+        {
+          email,
+          password,
+          name,
+          role,
+        }
+      );
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
+
   async getDrivers(): Promise<Driver[] | []> {
     const token = await this.getToken();
 
