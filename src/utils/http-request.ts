@@ -6,16 +6,28 @@ import axios from "axios";
 
 export class HttpRequest {
   async getToken(): Promise<string> {
-    // const response = await axios.post(
-    //   `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
-    //   {
-    //     email: "admin@email.com",
-    //     password: "123456",
-    //   }
-    // );
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("No token found");
+    }
+    return token;
+  }
 
-    // return response.data.access_token;
-    return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODEzZGYzYjAxMjZkZGE4YzAxOGY4MjMiLCJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImlhdCI6MTc0NjU2MDExMywiZXhwIjoxNzQ2NTYzNzEzfQ.vHdn6DhjoIU0HxKvZcjI6Wx-g71HKdvAVnYbf24WwS0";
+  async login(email: string, password: string): Promise<string | undefined> {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
+
+      localStorage.setItem("token", response?.data.access_token);
+      return response?.data.access_token;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   }
 
   async getDrivers(): Promise<Driver[] | []> {
