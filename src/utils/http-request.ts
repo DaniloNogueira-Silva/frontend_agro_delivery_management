@@ -37,15 +37,12 @@ export class HttpRequest {
     role: string
   ): Promise<void> {
     try {
-      return await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`,
-        {
-          email,
-          password,
-          name,
-          role,
-        }
-      );
+      return await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user`, {
+        email,
+        password,
+        name,
+        role,
+      });
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -109,5 +106,55 @@ export class HttpRequest {
     );
 
     return getMaintenancesResponse.data;
+  }
+
+  async createDriver(data: Driver): Promise<void> {
+    try {
+      const token = await this.getToken();
+      return await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/driver`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateDriver(driverId: string, data: Driver): Promise<void> {
+    try {
+      const token = await this.getToken();
+      return await axios.patch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/driver/${driverId}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteDriver(driverId?: string): Promise<void> {
+    try {
+      const token = await this.getToken();
+      return await axios.delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/driver/${driverId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
   }
 }

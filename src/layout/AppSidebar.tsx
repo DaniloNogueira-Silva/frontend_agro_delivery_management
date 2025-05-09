@@ -16,6 +16,7 @@ import {
   TableIcon,
   TaskIcon,
   UserCircleIcon,
+  UserIcon,
 } from "../icons/index";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
@@ -37,6 +38,12 @@ const navItems: NavItem[] = [
     icon: <BoxCubeIcon />,
     name: "Dashboard",
     path: "/dashboard",
+  },
+
+    {
+    icon: <UserIcon />,
+    name: "Motoristas",
+    path: "/drivers",
   },
   // aqui são os menus originais
   {
